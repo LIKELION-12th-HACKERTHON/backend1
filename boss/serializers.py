@@ -7,7 +7,7 @@ from customer.serializers import *
 class PostSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
     nickname = serializers.CharField(source='user.nickname', read_only=True)
-    location = serializers.CharField(source='user.location', read_only=True)
+    district = serializers.CharField(source='user.district', read_only=True)
     class Meta:
         model = Post
         fields = "__all__"
