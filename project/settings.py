@@ -77,6 +77,7 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:5173",
     "http://127.0.0.1:8000",
     "http://127.0.0.1:5173",
+    "http://127.0.0.1:3000",
     "https://ourvege.shop"]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -108,10 +109,10 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'), # DB(스키마) 이름
-        'USER': config('DB_USER'), # 유저 이름 (root)
-        'PASSWORD': config('DB_PASSWORD'), # DB 비밀번호
-        'HOST': config('DB_HOST'), # DB 엔드포인트
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
         'PORT': 3306,
     }
 }
