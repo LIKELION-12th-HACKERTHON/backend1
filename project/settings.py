@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import pymysql
+
+pymysql.install_as_MySQLdb()
 
 from pathlib import Path
 
@@ -20,12 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p^@&%r03m7qs)*wz21l(^$_c1qm*lu$!qzp%u3a%#@vk1ga0ar'
+# settings.py
+from decouple import config
+
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3.39.201.100', 'ourvege.store', '127.0.0.1']
 
 
 # Application definition
@@ -90,11 +96,14 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('DB_NAME'), # DB(스키마) 이름
+        'USER': config('DB_USER'), # 유저 이름 (root)
+        'PASSWORD': config('DB_PASSWORD'), # DB 비밀번호
+        'HOST': config('DB_HOST'), # DB 엔드포인트
+        'PORT': 3306,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -200,3 +209,8 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
 }
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
